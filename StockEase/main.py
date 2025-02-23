@@ -1,7 +1,7 @@
 import flet as ft
-from ui.dashboard import  dashboard,dashboard_login
-
-
+from ui.dashboard import  dashboard
+from ui.product_screen import product_screen
+from ui.orders_screen import orders_screen
 theme = "light" #مؤقتا
 
 def main(page: ft.Page):
@@ -18,6 +18,12 @@ def main(page: ft.Page):
         page.views.clear()
         if page.route == "/":
             page.views.append(dashboard(page))
+        elif page.route=="/product_screen"    :
+            page.views.append(product_screen(page))
+        elif page.route=="/customers_screen":
+            page.views.append(product_screen(page)) 
+        elif page.route=="/orders_screen":
+            page.views.append(orders_screen(page))       
         page.update()
 
     page.on_route_change = route_change

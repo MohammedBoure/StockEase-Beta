@@ -1,4 +1,5 @@
 import json
+import os
 
 
 def write_json(data, file_path):
@@ -11,5 +12,8 @@ def read_json(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         return json.load(file)
 
-font_size  = read_json("config/font_sizes.json")
-theme = read_json("config/themes.json")["dark"]
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # Get project root directory
+CONFIG_PATH = os.path.join(BASE_DIR, "config")  # Path to config folder
+
+font_size = read_json(os.path.join(CONFIG_PATH, "font_sizes.json"))
+theme = read_json(os.path.join(CONFIG_PATH, "themes.json"))["light"]
