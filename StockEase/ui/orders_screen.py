@@ -5,47 +5,14 @@ import time
 import threading
 
 def orders_screen(page: ft.Page):
+    mod_operatio_number = False
+    id_operation_number = 0
     
     def close_dlg_accoun_name(e, confirmed):
         dlg_modal.open = False
         e.page.update()
-
-    dlg_modal = ft.AlertDialog(
-        modal=True,
-        title=ft.Text("Number", rtl=True),
-        content=ft.Text("-------------", rtl=True),
-        actions=[
-            ft.TextButton(
-                "نعم",
-                on_click=lambda _: close_dlg_accoun_name(_, True),
-                style=ft.ButtonStyle(
-                    bgcolor=theme["button_bg_color"],
-                    color=theme["button_text_color"],
-                    shape=ft.RoundedRectangleBorder(radius=10),
-                    overlay_color=theme["button_overlay_color"],
-                    padding=ft.Padding(12, 8, 12, 8),
-                )
-            ),
-            ft.TextButton(
-                "لا",
-                on_click=lambda _: close_dlg_accoun_name(_, False),
-                style=ft.ButtonStyle(
-                    bgcolor=theme["button_bg_color"],
-                    color=theme["button_text_color"],
-                    shape=ft.RoundedRectangleBorder(radius=10),
-                    overlay_color=theme["button_overlay_color"],
-                    padding=ft.Padding(12, 8, 12, 8),
-                )
-            ),
-            ft.IconButton(
-                icon=ft.icons.CLOSE,
-                on_click=lambda _: close_dlg_accoun_name(_, False),
-                icon_color=theme["button_text_color"],
-            ),
-        ],
-        actions_alignment=ft.MainAxisAlignment.END,
-        on_dismiss=lambda e: print("Modal dialog dismissed!"),
-    )
+        
+    number_text = ft.TextField(text_size=font_size["input"], color=theme["text_color0"],height=40)
 
     number_buttons = ft.GridView(
         runs_count=3,
@@ -55,7 +22,7 @@ def orders_screen(page: ft.Page):
         controls=[
             ft.TextButton(
                 str(i),
-                on_click=lambda e, i=i: print(f"Number {i} clicked"),
+                on_click=lambda e, i=i: number_add(i),
                 style=ft.ButtonStyle(
                     bgcolor=theme["button_bg_color"],
                     color=theme["button_text_color"],
@@ -90,14 +57,59 @@ def orders_screen(page: ft.Page):
         ],
     )
 
-    dlg_modal.content = ft.Column(
-        controls=[
-            dlg_modal.content,
-            number_buttons,
+    dlg_modal = ft.AlertDialog(
+        modal=True,
+        title=ft.Row(
+            controls=[
+                ft.Text("Number Input", rtl=True),
+                ft.IconButton(
+                    icon=ft.icons.CLOSE,
+                    on_click=lambda _: close_dlg_accoun_name(_, False),
+                    icon_color=theme["button_text_color"],
+                ),
+            ],
+            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+        ),
+        content=ft.Container(
+            content=ft.Column(
+                controls=[
+                    ft.Text("Enter a number:"),
+                    number_text,
+                    ft.Divider(),  # Add a divider for better visual separation
+                    number_buttons,  # Include the number buttons grid
+                ],
+                spacing=10,
+            ),
+            height=400,
+        ),
+        actions=[
+            ft.TextButton(
+                "Submit",
+                on_click=lambda _: close_dlg_accoun_name(_, True),
+                style=ft.ButtonStyle(
+                    bgcolor=theme["button_bg_color"],
+                    color=theme["button_text_color"],
+                    shape=ft.RoundedRectangleBorder(radius=10),
+                    overlay_color=theme["button_overlay_color"],
+                    padding=ft.Padding(12, 8, 12, 8),
+                )
+            ),
+            ft.TextButton(
+                "Cancel",
+                on_click=lambda _: close_dlg_accoun_name(_, False),
+                style=ft.ButtonStyle(
+                    bgcolor=theme["button_bg_color"],
+                    color=theme["button_text_color"],
+                    shape=ft.RoundedRectangleBorder(radius=10),
+                    overlay_color=theme["button_overlay_color"],
+                    padding=ft.Padding(12, 8, 12, 8),
+                )
+            ),
         ],
+        actions_alignment=ft.MainAxisAlignment.END,
+        on_dismiss=lambda e: print("Modal dialog dismissed!"),
     )
-
-
+    
     def open_dlg_accoun_name(e):
         try:
 
@@ -196,7 +208,7 @@ def orders_screen(page: ft.Page):
                                                     bgcolor="#1b5210",
                                                     color="#ffffff",
                                                 ),
-                                                on_click=lambda e: number_add(e,i[0]),
+                                                on_click=lambda e: open_dlg_accoun_name(e),
                                             ),
                                         ],
                                         spacing=2,
@@ -229,7 +241,7 @@ def orders_screen(page: ft.Page):
     
     def number_add(e,id):
         nonlocal price
-        open_dlg_accoun_name(e)
+        
         for row in table.rows:
             if row.cells[0].content.value == str(id):
                 price.value = str(float(row.cells[2].content.value) + float(price.value))
