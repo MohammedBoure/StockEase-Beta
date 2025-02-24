@@ -6,6 +6,7 @@
         "container_border": 1,
         "container_border_color": "#333333",
         "container_padding": 16,
+        "check_box_text_color": "white",
         "text_color0": "#FFFFFF",
         
         "border_color": "#444444",
@@ -45,6 +46,7 @@
         "container_border": 1,
         "container_border_color": "#DDDDDD",
         "container_padding": 16,
+        "check_box_text_color": "black",
         "text_color0": "#000000",
         
         "border_color": "#CCCCCC",

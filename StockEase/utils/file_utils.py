@@ -16,4 +16,5 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # Get project root direct
 CONFIG_PATH = os.path.join(BASE_DIR, "config")  # Path to config folder
 
 font_size = read_json(os.path.join(CONFIG_PATH, "font_sizes.json"))
-theme = read_json(os.path.join(CONFIG_PATH, "themes.json"))["light"]
+theme = read_json(os.path.join(CONFIG_PATH, "themes.json"))["dark"]
+
