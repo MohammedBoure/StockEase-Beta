@@ -2,7 +2,7 @@ import flet as ft
 from ui.dashboard import  dashboard
 from ui.product_screen import product_screen
 from ui.orders_screen import orders_screen
-theme = "light" #مؤقتا
+theme = "dark" #مؤقتا
 
 def main(page: ft.Page):
     page.title = "STOCKEASE-BETA"

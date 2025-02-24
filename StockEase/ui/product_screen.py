@@ -4,6 +4,7 @@ import random
 
 
 
+
 def product_screen(page: ft.Page):
     # Left Container (Price)
 
