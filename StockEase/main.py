@@ -1,8 +1,8 @@
 import flet as ft
 from ui.dashboard import  dashboard
-from ui.product_screen import product_screen
-from ui.orders_screen import orders_screen
-theme = "light" #مؤقتا
+from ui.product_screen import ProductScreenView
+from ui.orders_screen import OrdersScreen
+theme = "dark" #مؤقتا
 
 def main(page: ft.Page):
     page.title = "STOCKEASE-BETA"
@@ -11,6 +11,8 @@ def main(page: ft.Page):
     page.window.top = 3
     page.window.left = 600
     
+    page.window.full_screen = True
+    
     page.theme_mode = ft.ThemeMode.LIGHT if theme == "light" else ft.ThemeMode.DARK
 
 
@@ -18,12 +20,12 @@ def main(page: ft.Page):
         page.views.clear()
         if page.route == "/":
             page.views.append(dashboard(page))
-        elif page.route=="/product_screen"    :
-            page.views.append(product_screen(page))
+        elif page.route=="/product_screen":
+            page.views.append(ProductScreenView(page))
         elif page.route=="/customers_screen":
-            page.views.append(product_screen(page)) 
+            page.views.append(ProductScreenView(page))
         elif page.route=="/orders_screen":
-            page.views.append(orders_screen(page))       
+            page.views.append(OrdersScreen(page))       
         page.update()
 
     page.on_route_change = route_change

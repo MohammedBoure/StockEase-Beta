@@ -7,7 +7,7 @@
         "container_border_color": "#333333",
         "container_padding": 16,
         "check_box_text_color": "white",
-        "text_color0": "#FFFFFF",
+        "text_color": "#FFFFFF",
         
         "border_color": "#444444",
         "icon_button_bg_color": "#333333",
@@ -21,18 +21,21 @@
         "button_border_radius": 10,
         "button_border_width":0,
         "button_overlay_color": "#1E90FF",
+
         "input_border_color": "#555555",
         "input_fill_color": "#2A2A2A",
         "input_hover_color": "#3A3A3A",
         "input_cursor_color": "#FFFFFF",
         "input_selection_color": "#555555",
         "input_focused_border_color": "#1E90FF",
+
         "expansion_panel_header_bg": "#1E1E1E",
         "expansion_panel_header_border": "#333333",
         "expansion_panel_header_border_thickness": 1,
         "expansion_panel_text_color": "#DDDDDD",
         "expansion_panel_divider": "#444444",
         "expansion_panel_icon": "#FFFFFF",
+
         "panel_card_bg": "#1E1E1E",
         "panel_card_border_radius": 12,
         "panel_card_border_color": "#333333",
@@ -47,16 +50,16 @@
         "container_border_color": "#DDDDDD",
         "container_padding": 16,
         "check_box_text_color": "black",
-        "text_color0": "#000000",
+        "text_color": "#000000",
         
         "border_color": "#CCCCCC",
         "icon_button_bg_color": "#F0F0F0",
         "icon_button_icon_color": "#000000",
         "icon_button_overlay_color": "#1E90FF",
         "icon_button_border_radius": 12,
+
         "button_text_color": "#000000",
         "button_bg_color": "#757877",
-        
         "button_border_radius": 10,
         "button_border_width":0,
         "button_overlay_color": "#1E90FF",

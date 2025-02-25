@@ -64,10 +64,10 @@ def dashboard(page: ft.Page):
                 content=ft.Text("📊 Dashboard", 
                              size=font_size["title"], 
                              weight="bold", 
-                             color=theme["text_color0"]),
+                             color=theme["text_color"]),
                 padding=20
             ),
-            ft.Divider(height=10, color=theme["text_color0"]),
+            ft.Divider(height=10, color=theme["text_color"]),
             ft.Container(
                 content=interface_buttons,
                 expand=True,
