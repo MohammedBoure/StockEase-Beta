@@ -15,6 +15,7 @@ def read_json(file_path):
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # Get project root directory
 CONFIG_PATH = os.path.join(BASE_DIR, "config")  # Path to config folder
 
+settings = read_json(os.path.join(CONFIG_PATH, "settings.json"))
 font_size = read_json(os.path.join(CONFIG_PATH, "font_sizes.json"))
-theme = read_json(os.path.join(CONFIG_PATH, "themes.json"))["dark"]
-
+theme = read_json(os.path.join(CONFIG_PATH, "themes.json"))[settings["theme"]]
+language = read_json(os.path.join(CONFIG_PATH, "language.json"))[settings["language"]]

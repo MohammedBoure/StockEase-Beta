@@ -1,5 +1,5 @@
 import flet as ft
-from utils.file_utils import theme, font_size
+from utils.file_utils import theme, font_size,language
 from database.products import ProductDatabase
 import random
 
@@ -17,6 +17,7 @@ class ProductScreenView(ft.View):
         """
         super().__init__(route="/product_screen")
         self.page = page
+        self.lng = language["product"]
         self.db_products = ProductDatabase()
         self.data = self.db_products.get_all_products()  
         self.batch_size = 20
@@ -25,11 +26,11 @@ class ProductScreenView(ft.View):
         self.status = True  
 
         self.special_button = self.make_button(
-            "hide", lambda e: self.hide_show(), width=250, height=50
+            self.lng["left_container"]["hide_special_button"], lambda e: self.hide_show(), width=250, height=50
         )
 
         self.search_field = ft.TextField(
-            label="🔍 Search",
+            label=self.lng["left_container"]["search_label"],
             text_size=font_size["input"],
             border=ft.InputBorder.OUTLINE,
             border_radius=8,
@@ -53,7 +54,7 @@ class ProductScreenView(ft.View):
             controls=[
                 self.search_text,
                 ft.Row(
-                    controls=[self.make_button("submit", self.search, width=250, height=50)],
+                    controls=[self.make_button(self.lng["left_container"]["Search"], self.search, width=250, height=50)],
                     alignment=ft.MainAxisAlignment.CENTER,
                 )
             ],
@@ -66,9 +67,32 @@ class ProductScreenView(ft.View):
                     ft.Divider(height=1, color=theme["border_color"]),
                     self.search_label,
                     ft.Divider(height=1, color=theme["border_color"]),
-                    self.make_button("Add Product", lambda e: self.open_dlg_add(e), width=250, height=50),
-                    self.make_button("Edit Product", lambda e: self.open_dlg_update(e), width=250, height=50),
-                    self.make_button("Delete Product", lambda e: self.open_dlg_delete(e), width=250, height=50),
+                    self.make_button(self.lng["left_container"]["Add_Product"]["Add_Product"],
+                                     lambda e: self.open_dlg_add(e),
+                                     width=250,
+                                     height=50,
+                                     icon=ft.Icons.ADD_CIRCLE_OUTLINED
+                                     ),
+                    self.make_button(self.lng["left_container"]["Edit_Product"]["Edit_Product"],
+                                     lambda e: self.open_dlg_update(e),
+                                     width=250,
+                                     height=50,
+                                     icon=ft.Icons.EDIT
+                                     ),
+                    self.make_button(self.lng["left_container"]["Delete_Product"]["Delete_Product"],
+                                     lambda e: self.open_dlg_delete(e),
+                                     width=250,
+                                     height=50,
+                                     icon=ft.Icons.DELETE
+                                     ),
+                    ft.Divider(height=1, color=theme["border_color"]),
+                    self.make_button(self.lng["left_container"]["Out_of_stock_products"],
+                                     lambda e: self.Out_of_stock_products(e),
+                                     width=250,
+                                     height=50,
+                                     icon=ft.Icons.SHOPPING_BASKET_OUTLINED
+                                     ),
+
                 ],
                 horizontal_alignment="center",
             ),
@@ -82,10 +106,10 @@ class ProductScreenView(ft.View):
         self.top_container = ft.Container(
             content=ft.Row(
                 controls=[
-                    self.make_button("Product", lambda e: self.refresh_products(), width=150, height=70),
-                    self.make_button("orders", lambda e: self.page.go("/orders_screen"), width=150, height=70),
-                    self.make_button("costumers", lambda e: self.page.go("/customers_screen"), width=150, height=70),
-                    self.make_button("dashboard", lambda e: self.page.go("/"), width=150, height=70),
+                    self.make_button(self.lng["top_container"]["Product"], lambda e: self.reset_table(), width=150, height=70),
+                    self.make_button(self.lng["top_container"]["Orders"], lambda e: self.page.go("/orders_screen"), width=150, height=70),
+                    self.make_button(self.lng["top_container"]["Customers"], lambda e: self.page.go("/customers_screen"), width=150, height=70),
+                    self.make_button(self.lng["top_container"]["Dashboard"], lambda e: self.page.go("/"), width=150, height=70),
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
             ),
@@ -99,11 +123,11 @@ class ProductScreenView(ft.View):
             columns=[
                 ft.DataColumn(ft.Checkbox(on_change=self.select_all_rows)),
                 ft.DataColumn(self.button("ID", lambda e: self.on_click_id_btn(e, 0))),
-                ft.DataColumn(self.button("Name", lambda e: self.on_click_id_btn(e, 1))),
-                ft.DataColumn(self.button("Last Quantity", lambda e: self.on_click_id_btn(e, 2))),
-                ft.DataColumn(self.button("Quantity", lambda e: self.on_click_id_btn(e, 3))),
-                ft.DataColumn(self.button("Price", lambda e: self.on_click_id_btn(e, 4))),
-                ft.DataColumn(self.button("Price Per Item", lambda e: self.on_click_id_btn(e, 5))),
+                ft.DataColumn(self.button(self.lng["table"]["Name"], lambda e: self.on_click_id_btn(e, 1))),
+                ft.DataColumn(self.button(self.lng["table"]["recommended_quantity"], lambda e: self.on_click_id_btn(e, 2))),
+                ft.DataColumn(self.button(self.lng["table"]["Quantity"], lambda e: self.on_click_id_btn(e, 3))),
+                ft.DataColumn(self.button(self.lng["table"]["Price"], lambda e: self.on_click_id_btn(e, 4))),
+                ft.DataColumn(self.button(self.lng["table"]["Price_Per_Item"], lambda e: self.on_click_id_btn(e, 5))),
             ],
             rows=[],
         )
@@ -117,7 +141,15 @@ class ProductScreenView(ft.View):
         )
 
         self.main_content_container = ft.Container(
-            content=self.list_view,
+            content=ft.Stack(
+                [
+                    ft.Container(
+                        content=ft.Icon(name=ft.Icons.SHOPIFY_ROUNDED, size=600, opacity=0.3,color="grey"),
+                        alignment=ft.alignment.center,
+                    ),
+                    self.list_view,
+                ]
+            ),
             padding=20,
             bgcolor=theme["container_bg_colors"],
             border_radius=ft.border_radius.all(theme["container_border_radius"]),
@@ -198,9 +230,9 @@ class ProductScreenView(ft.View):
         """
         return ft.AlertDialog(
             modal=True,
-            title=ft.Text("Confirm", size=18, weight=ft.FontWeight.BOLD, text_align=ft.TextAlign.CENTER),
+            title=ft.Text(self.lng["left_container"]["Delete_Product"]["Confirm"], size=18, weight=ft.FontWeight.BOLD, text_align=ft.TextAlign.CENTER),
             content=ft.Container(
-                content=ft.Text("Are you sure you want to delete?", text_align=ft.TextAlign.CENTER),
+                content=ft.Text(self.lng["left_container"]["Delete_Product"]["comment"], text_align=ft.TextAlign.CENTER),
                 alignment=ft.alignment.center,
                 padding=ft.padding.all(10),
                 height=50, 
@@ -210,8 +242,8 @@ class ProductScreenView(ft.View):
                     alignment=ft.MainAxisAlignment.CENTER,
                     spacing=20,
                     controls=[
-                        self.make_button(text="Yes", on_click=lambda _: self.close_dlg_delete(_, True), width=100, height=40),
-                        self.make_button(text="No", on_click=lambda _: self.close_dlg_delete(_, False), width=100, height=40),
+                        self.make_button(text=self.lng["left_container"]["Delete_Product"]["Yes"], on_click=lambda _: self.close_dlg_delete(_, True), width=100, height=40),
+                        self.make_button(text=self.lng["left_container"]["Delete_Product"]["No"], on_click=lambda _: self.close_dlg_delete(_, False), width=100, height=40),
                     ],
                 )
             ],
@@ -228,26 +260,31 @@ class ProductScreenView(ft.View):
         self.refresh_products()
         self.dlg_modal_update.open = False
         e.page.update()
-    def dlg_update(self,e,id,name, recommended_quantity, current_quantity, price, purchase_price):
+    def dlg_update(self,e,name, recommended_quantity, current_quantity, price, purchase_price):
         """
         Handles the logic for updating a product in the database.
         Validates the input and updates the product details if the input is valid.
         Refreshes the product list after the update.
         """
-        print(self.list_selected)
         if len(self.list_selected)!=1:
-            self.text_invailed.value = "invalid input!"
+            self.text_invailed.value = self.lng["left_container"]["Edit_Product"]["invailed_text"]
+            self.text_invailed.update()
+            return
+        try:
+
+            self.db_products.update_product(
+                self.list_selected[0][0],
+                name,
+                int(recommended_quantity),
+                int(current_quantity),
+                float(price),
+                float(purchase_price),
+            )
+        except:
+            self.text_invailed.value = self.lng["left_container"]["Edit_Product"]["invailed_text"]
             self.text_invailed.update()
             return
         
-        self.db_products.update_product(
-            self.list_selected[0][0],
-            name,
-            int(recommended_quantity),
-            int(current_quantity),
-            float(price),
-            float(purchase_price),
-        )
         for i in range(len(self.data)):
             if self.data[i][0] == self.list_selected[0][0]:
                 self.data[i]=(
@@ -298,13 +335,13 @@ class ProductScreenView(ft.View):
         The dialog includes input fields for product name, quantities, price, and purchase price.
         """
         def Text(lbl,y,hint):
-            return ft.TextField(label=lbl,
+            return ft.TextField(
+                hint_text=lbl, 
                 text_size=font_size["input"],
                 border=ft.InputBorder.OUTLINE,
                 border_radius=8,
                 text_align=ft.TextAlign.CENTER,
                 filled=True,
-                hint_text=hint,
                 width=y,
                 color=theme["text_color"],
                 border_color=theme["input_border_color"],
@@ -312,14 +349,14 @@ class ProductScreenView(ft.View):
                 hover_color=theme["input_hover_color"],
                 cursor_color=theme["input_cursor_color"],
                 selection_color=theme["input_selection_color"],
-                focused_border_color=theme["input_focused_border_color"],                  
-            )    
+                focused_border_color=theme["input_focused_border_color"],
+            )   
         #id,name, recommended_quantity, current_quantity, price, purchase_price
-        self.name_field = Text(lbl="Name", y=300,hint="string")
-        self.recommended_quantity_field = Text(lbl="Recommended quantity", y=300,hint="integer")
-        self.current_quantity_field = Text(lbl="Current quantity", y=300,hint="integer")
-        self.price_field = Text(lbl="Price", y=300,hint="real")
-        self.purchase_price_field = Text(lbl="Purchase price", y=300,hint="real")
+        self.name_field = Text(lbl=self.lng["left_container"]["Edit_Product"]["Name"], y=300,hint="string")
+        self.recommended_quantity_field = Text(lbl=self.lng["left_container"]["Edit_Product"]["Recommended_quantity"], y=300,hint="integer")
+        self.current_quantity_field = Text(lbl=self.lng["left_container"]["Edit_Product"]["Current_quantity"], y=300,hint="integer")
+        self.price_field = Text(lbl=self.lng["left_container"]["Edit_Product"]["price"], y=300,hint="real")
+        self.purchase_price_field = Text(lbl=self.lng["left_container"]["Edit_Product"]["Purchase_price"], y=300,hint="real")
         self.text_invailed = ft.Text("",color="red")
         dialog = ft.Column(
             expand=True,
@@ -327,7 +364,7 @@ class ProductScreenView(ft.View):
                 ft.Row(
                     alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                     controls=[
-                        ft.Text("Update Product", size=20, weight=ft.FontWeight.BOLD),
+                        ft.Text(self.lng["left_container"]["Edit_Product"]["Edit_Product"], size=20, weight=ft.FontWeight.BOLD),
                         ft.IconButton(ft.Icons.CLOSE, on_click=lambda e: self.close_dlg_update(e)),
                     ],
                 ),
@@ -363,16 +400,15 @@ class ProductScreenView(ft.View):
                         vertical_alignment=ft.CrossAxisAlignment.CENTER,  
                         spacing=10,
                         controls=[
-                            self.make_button(text="إدخال معلومات", on_click=lambda e: self.dlg_update(
+                            self.make_button(text=self.lng["left_container"]["Edit_Product"]["updating_data"], on_click=lambda e: self.dlg_update(
                                 e,
-                                self.id_field.value,
                                 self.name_field.value,
                                 self.recommended_quantity_field.value,
                                 self.current_quantity_field.value,
                                 self.price_field.value,
                                 self.purchase_price_field.value,
                                 ), width=200, height=50),
-                            self.make_button(text="خروج", on_click=lambda e: self.close_dlg_update(e), width=200, height=50),
+                            self.make_button(text=self.lng["left_container"]["Edit_Product"]["exit"], on_click=lambda e: self.close_dlg_update(e), width=200, height=50),
                         ],
                     ),
                     alignment=ft.alignment.center,  
@@ -440,22 +476,25 @@ class ProductScreenView(ft.View):
         Validates the input and adds the product if the input is valid.
         Updates the product list after the addition."""
         
-
-        self.db_products.add_product(
-            int(id),
-            name,
-            int(recommended_quantity),
-            int(current_quantity),
-            float(price),
-            float(purchase_price),
-        )
-        self.data.append((int(id),
-            name,
-            int(recommended_quantity),
-            int(current_quantity),
-            float(price),
-            float(purchase_price))
-        )
+        try:
+            self.db_products.add_product(
+                int(id),
+                name,
+                int(recommended_quantity),
+                int(current_quantity),
+                float(price),
+                float(purchase_price),
+            )
+            self.data.append((int(id),
+                name,
+                int(recommended_quantity),
+                int(current_quantity),
+                float(price),
+                float(purchase_price))
+            )
+        except:
+            return
+            
         
         self.id_field_add.value = ""
         self.id_field_add.update()
@@ -489,13 +528,13 @@ class ProductScreenView(ft.View):
         Also includes a button to generate a unique barcode for the product.
         """
         def Text(lbl,y,hint):
-            return ft.TextField(label=lbl,
+            return ft.TextField(
+                hint_text=lbl, 
                 text_size=font_size["input"],
                 border=ft.InputBorder.OUTLINE,
                 border_radius=8,
                 text_align=ft.TextAlign.CENTER,
                 filled=True,
-                hint_text=hint,
                 width=y,
                 color=theme["text_color"],
                 border_color=theme["input_border_color"],
@@ -503,15 +542,15 @@ class ProductScreenView(ft.View):
                 hover_color=theme["input_hover_color"],
                 cursor_color=theme["input_cursor_color"],
                 selection_color=theme["input_selection_color"],
-                focused_border_color=theme["input_focused_border_color"],                  
-            )    
+                focused_border_color=theme["input_focused_border_color"],
+            )  
         #id,name, recommended_quantity, current_quantity, price, purchase_price
         self.id_field_add = Text(lbl="ID", y=250,hint="#############")
-        self.name_field_add = Text(lbl="Name", y=300,hint="string")
-        self.recommended_quantity_field_add = Text(lbl="Recommended quantity", y=300,hint="integer")
-        self.current_quantity_field_add = Text(lbl="Current quantity", y=300,hint="integer")
-        self.price_field_add = Text(lbl="Price", y=300,hint="real")
-        self.purchase_price_field_add = Text(lbl="Purchase price", y=300,hint="real")
+        self.name_field_add = Text(lbl=self.lng["left_container"]["Add_Product"]["Name"], y=300,hint="string")
+        self.recommended_quantity_field_add = Text(lbl=self.lng["left_container"]["Add_Product"]["Recommended_quantity"], y=300,hint="integer")
+        self.current_quantity_field_add = Text(lbl=self.lng["left_container"]["Add_Product"]["Current_quantity"], y=300,hint="integer")
+        self.price_field_add = Text(lbl=self.lng["left_container"]["Add_Product"]["price"], y=300,hint="Real")
+        self.purchase_price_field_add = Text(lbl=self.lng["left_container"]["Add_Product"]["Purchase_price"], y=300,hint="real")
         
         dialog = ft.Column(
             expand=True,
@@ -519,8 +558,12 @@ class ProductScreenView(ft.View):
                 ft.Row(
                     alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                     controls=[
-                        ft.Text("Add Product", size=20, weight=ft.FontWeight.BOLD),
-                        ft.IconButton(ft.Icons.CLOSE, on_click=lambda e: self.close_dlg_add(e)),
+                        ft.Text(self.lng["left_container"]["Add_Product"]["Add_Product"],
+                                size=20,
+                                weight=ft.FontWeight.BOLD,
+                                text_align=ft.TextAlign.CENTER),
+                        ft.IconButton(ft.Icons.CLOSE,
+                                      on_click=lambda e: self.close_dlg_add(e)),
                     ],
                 ),
                 ft.Divider(),
@@ -557,7 +600,7 @@ class ProductScreenView(ft.View):
                         vertical_alignment=ft.CrossAxisAlignment.CENTER,  
                         spacing=10,
                         controls=[
-                            self.make_button(text="إدخال معلومات", on_click=lambda e: self.dlg_add(
+                            self.make_button(text=self.lng["left_container"]["Add_Product"]["inserting_data"], on_click=lambda e: self.dlg_add(
                                 e,
                                 self.id_field_add.value,
                                 self.name_field_add.value,
@@ -566,7 +609,7 @@ class ProductScreenView(ft.View):
                                 self.price_field_add.value,
                                 self.purchase_price_field_add.value,
                                 ), width=200, height=50),
-                            self.make_button(text="خروج", on_click=lambda e: self.close_dlg_add(e), width=200, height=50),
+                            self.make_button(text=self.lng["left_container"]["Add_Product"]["exit"], on_click=lambda e: self.close_dlg_add(e), width=200, height=50),
                         ],
                     ),
                     alignment=ft.alignment.center,  
@@ -588,33 +631,43 @@ class ProductScreenView(ft.View):
         )
     #--------end_dialog_add-----------
 
-
     def handle_scroll(self, e):
         """
         Handles the scroll event for the product list.
         Loads more data when the user scrolls near the bottom of the list.
         """
         if e.pixels >= e.max_scroll_extent * 0.9:
-            print(111)
             self.load_more_data(None)
 
-    def make_button(self, text, on_click, width, height):
+    def make_button(self, text, on_click, width, height, icon=None):
         """
-        Creates and returns a styled button with the specified text, click handler, width, and height.
+        Creates and returns a styled button with the specified text, click handler, width, height, and optional icon.
         Applies consistent styling from the theme configuration.
         """
+        controls = []
+        
+        if icon:
+            controls.append(ft.Icon(icon, color=theme["button_text_color"],size=25))
+
+        controls.append(ft.Container(ft.Text(text, text_align=ft.TextAlign.CENTER), expand=True))
+
         return ft.ElevatedButton(
             width=width,
             height=height,
-            text=text,
             on_click=on_click,
             bgcolor=theme["button_bg_color"],
             color=theme["button_text_color"],
             style=ft.ButtonStyle(
                 shape=ft.RoundedRectangleBorder(radius=theme["button_border_radius"]),
                 overlay_color=theme["button_overlay_color"],
-            )
+            ),
+            content=ft.Row(
+                controls=controls,
+                alignment=ft.MainAxisAlignment.CENTER,  # يضمن بقاء النص في المنتصف
+                spacing=8  
+            ) 
         )
+
 
     def button(self, title, on_click):
         """
@@ -627,7 +680,7 @@ class ProductScreenView(ft.View):
             style=ft.ButtonStyle(
                 shape=ft.RoundedRectangleBorder(radius=0),
                 padding=ft.padding.all(5),
-                color="white"
+                color=theme["button_text_color"]
             )
         )
 
@@ -636,14 +689,14 @@ class ProductScreenView(ft.View):
         Toggles the visibility of the top container (navigation buttons).
         Updates the button text to reflect the current state (hide/show).
         """
-        if self.special_button.text == "hide":
+        if self.special_button.text == self.lng["left_container"]["hide_special_button"]:
             if self.top_container in self.vertical_containers.controls:
                 self.vertical_containers.controls.remove(self.top_container)
-            self.special_button.text = "show"
-        elif self.special_button.text == "show":
+            self.special_button.text = self.lng["left_container"]["show_special_button"]
+        elif self.special_button.text == self.lng["left_container"]["show_special_button"]:
             self.vertical_containers.controls.insert(0, self.top_container)
-            self.special_button.text = "hide"
-        self.page.update()  # تحديث الصفحة لعرض التغيير
+            self.special_button.text = self.lng["left_container"]["hide_special_button"]
+        self.page.update()
 
     def search(self, e):
         """
@@ -651,7 +704,8 @@ class ProductScreenView(ft.View):
         Updates the product list with the search results.
         """
         self.data = self.db_products.search_product(self.search_field.value)
-        print("Search result:", self.data)
+        if not self.data:
+            self.table.clean()
         self.refresh_products()
 
     def refresh_products(self):
@@ -664,6 +718,10 @@ class ProductScreenView(ft.View):
         self.list_selected = []
         self.load_more_data(None)
 
+    def reset_table(self):
+        self.data = self.db_products.get_all_products()
+        self.refresh_products()
+    
     def on_change(self, e, id, name, last_quantity, quantity, price, price_per_item):
         """
         Handles the change event for checkboxes in the product table.
@@ -709,19 +767,35 @@ class ProductScreenView(ft.View):
             for item in next_batch:
                 def make_on_change(item):
                     return lambda e: self.on_change(e, item[0], item[1], item[2], item[3], item[4], item[5])
-                self.table.rows.append(
-                    ft.DataRow(
-                        cells=[
-                            ft.DataCell(ft.Checkbox(on_change=make_on_change(item))),
-                            ft.DataCell(ft.Text(str(item[0]), color="white")),
-                            ft.DataCell(ft.Text(item[1], color="white")),
-                            ft.DataCell(ft.Text(str(item[2]), color="white")),
-                            ft.DataCell(ft.Text(str(item[3]), color="white")),
-                            ft.DataCell(ft.Text(str(item[4]), color="white")),
-                            ft.DataCell(ft.Text(str(item[5]), color="white")),
-                        ]
+                
+                if item[3]<item[2]:
+                    self.table.rows.append(
+                        ft.DataRow(
+                            cells=[
+                                ft.DataCell(ft.Checkbox(on_change=make_on_change(item))),
+                                ft.DataCell(ft.Text(str(item[0]), color=theme["text_color"])),
+                                ft.DataCell(ft.Text(item[1], color=theme["text_color"])),
+                                ft.DataCell(ft.Text("     "+str(item[2]), color=theme["text_color"])),
+                                ft.DataCell(ft.Text("   "+str(item[3]), color="red")),
+                                ft.DataCell(ft.Text("  "+str(item[4]), color=theme["text_color"])),
+                                ft.DataCell(ft.Text("  "+str(item[5]), color=theme["text_color"])),
+                            ]
+                        )
                     )
-                )
+                else:
+                    self.table.rows.append(
+                        ft.DataRow(
+                            cells=[
+                                ft.DataCell(ft.Checkbox(on_change=make_on_change(item))),
+                                ft.DataCell(ft.Text(str(item[0]), color=theme["text_color"])),
+                                ft.DataCell(ft.Text(item[1], color=theme["text_color"])),
+                                ft.DataCell(ft.Text("     "+str(item[2]), color=theme["text_color"])),
+                                ft.DataCell(ft.Text("   "+str(item[3]), color=theme["text_color"])),
+                                ft.DataCell(ft.Text("  "+str(item[4]), color=theme["text_color"])),
+                                ft.DataCell(ft.Text("  "+str(item[5]), color=theme["text_color"])),
+                            ]
+                        )
+                    )
             print(f"Loaded up to index: {self.current_index}")
             self.page.update()
 
@@ -740,3 +814,11 @@ class ProductScreenView(ft.View):
         self.current_index = 0
         self.load_more_data(None)
 
+    def Out_of_stock_products(self,e):
+        newlist = []
+        for item in self.data:
+            if item[3]<item[2]:
+                newlist.append(item)
+            self.data = newlist
+        self.refresh_products()
+        

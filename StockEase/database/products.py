@@ -120,7 +120,7 @@ if __name__ == "__main__":
     
     
     
-    products = db.search_product("Product")
+    products = db.get_product_by_id(29)
     print(products)
     
     db.close()

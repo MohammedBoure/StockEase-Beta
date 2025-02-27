@@ -2,7 +2,10 @@ import flet as ft
 from ui.dashboard import  dashboard
 from ui.product_screen import ProductScreenView
 from ui.orders_screen import OrdersScreen
-theme = "dark" #مؤقتا
+from ui.settings_screen import SettingsScreenView
+from utils.file_utils import settings
+
+theme = settings["theme"]
 
 def main(page: ft.Page):
     page.title = "STOCKEASE-BETA"
@@ -25,7 +28,9 @@ def main(page: ft.Page):
         elif page.route=="/customers_screen":
             page.views.append(ProductScreenView(page))
         elif page.route=="/orders_screen":
-            page.views.append(OrdersScreen(page))       
+            page.views.append(OrdersScreen(page))     
+        elif page.route=="/settings_screen":
+              page.views.append(SettingsScreenView(page))     
         page.update()
 
     page.on_route_change = route_change

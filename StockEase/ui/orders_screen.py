@@ -1,6 +1,7 @@
 import flet as ft
-from utils.file_utils import theme, font_size
+from utils.file_utils import theme, font_size,language
 from database.products import ProductDatabase
+from database.orders import OrderDatabase
 import time
 import threading
 
@@ -8,6 +9,8 @@ class OrdersScreen(ft.View):
     def __init__(self, page: ft.Page):
         super().__init__(route="/orders_screen")
         self.page = page
+        self.page.window.bgcolor = theme["background_colors"]
+        self.lng = language["orders"]
         self.number_text = ft.TextField(
             text_size=font_size["input"],
             color=theme["text_color"],
@@ -22,6 +25,7 @@ class OrdersScreen(ft.View):
         self.number_buttons = self.create_number_buttons()
         self.dlg_modal = self.create_modal_dialog()
         self.db_products = ProductDatabase()
+        self.db_orders = OrderDatabase()
         self.data = self.db_products.get_all_products()
         self.table = self.create_table()
         self.list_view = self.create_list_view()
@@ -107,7 +111,7 @@ class OrdersScreen(ft.View):
                 controls=[
                     ft.Text("Number Input", rtl=True),
                     ft.IconButton(
-                        icon=ft.icons.CLOSE,
+                        icon=ft.Icons.CLOSE,
                         on_click=lambda _: self.close_dlg_number(_, False),
                         icon_color=theme["button_text_color"],
                     ),
@@ -158,11 +162,11 @@ class OrdersScreen(ft.View):
         return ft.DataTable(
             columns=[
                 ft.DataColumn(ft.Text("ID", color=theme["text_color"])),
-                ft.DataColumn(ft.Text("Name", color=theme["text_color"])),
-                ft.DataColumn(ft.Text("Price", color=theme["text_color"])),
-                ft.DataColumn(ft.Text("Price Per Item", color=theme["text_color"])),
-                ft.DataColumn(ft.Text("number", color=theme["text_color"])),
-                ft.DataColumn(ft.Text("          status", color=theme["text_color"])),
+                ft.DataColumn(ft.Text(self.lng["table"]['Name'], color=theme["text_color"])),
+                ft.DataColumn(ft.Text(self.lng["table"]["Price"], color=theme["text_color"])),
+                ft.DataColumn(ft.Text(self.lng["table"]["Price_Per_Item"], color=theme["text_color"])),
+                ft.DataColumn(ft.Text(self.lng["table"]["Number"], color=theme["text_color"])),
+                ft.DataColumn(ft.Text(self.lng["table"]["Status"], color=theme["text_color"])),
             ],
             rows=[],
         )
@@ -183,11 +187,28 @@ class OrdersScreen(ft.View):
             return False
 
         if "E" in e.key:
-            self.page.window.full_screen = False
-            self.page.window.minimized = True
-            self.page.update()
-            self.page.window.destroy()
+            products = []
+            for row in self.table.rows:
+                products.append({"product_id":int(row.cells[0].content.value),"quantity":int(row.cells[4].content.value)})
+              
+            for i in products:
+                for row in self.data:
+                    if i["product_id"]==row[0]:
+                        self.db_products.update_product(row[0],current_quantity=row[3]-i["quantity"])
+                  
+            self.table.rows.clear()
+            self.table.update()
 
+            
+            self.db_orders.add_order(float(self.price.value),"",products)
+            
+            
+            
+            self.price.value = "0.00"
+            self.price.update()
+            
+            return
+                
         if time.time() - self.input_keyboard_time > 0.5:
             threading.Timer(0.2, self.search_keyboard).start()
             self.input_keyboard = ""
@@ -199,11 +220,21 @@ class OrdersScreen(ft.View):
             self.input_keyboard += e.key
 
     def search_keyboard(self):
+        
+        
         if not (len(self.input_keyboard) == 2) and self.last_row:
-            self.last_row.cells[4].content.value = self.input_keyboard
+            quantity = self.db_products.get_product_by_id(int(self.last_row.cells[0].content.value))[3]
+            
+            try:int(self.input_keyboard)
+            except:return
+                        
+            if int(self.input_keyboard)>quantity:
+                self.last_row.cells[4].content.value =str(quantity)
+            else:
+                self.last_row.cells[4].content.value = self.input_keyboard
             p = 0
             for row in self.table.rows:
-                p = round(float(row.cells[2].content.value) * float(row.cells[4].content.value) + p, 2)
+                p = round(float(row.cells[2].content.value) * float(row.cells[4].content.value)+p, 2)
             self.price.value = str(p)
             self.table.update()
             self.price.update()
@@ -212,11 +243,14 @@ class OrdersScreen(ft.View):
         found = False
         for row in self.table.rows:
             if row.cells[0].content.value == self.input_keyboard:
+                quantity = self.db_products.get_product_by_id(int(row.cells[0].content.value))[3]
+                
                 current_value = int(row.cells[4].content.value)
-                row.cells[4].content.value = str(current_value + 1)
+                if not int(row.cells[4].content.value) +1 > quantity:
+                    row.cells[4].content.value = str(current_value + 1)
+                    self.price.value = str(round(float(row.cells[2].content.value) + float(self.price.value), 2))
+                    self.price.update()
                 self.last_row = row
-                self.price.value = str(round(float(row.cells[2].content.value) + float(self.price.value), 2))
-                self.price.update()
                 found = True
                 break
 
@@ -236,7 +270,7 @@ class OrdersScreen(ft.View):
                                 ft.Row(
                                     controls=[
                                         ft.ElevatedButton(
-                                            "delete",
+                                            self.lng["table"]["delete_bottun"],
                                             style=ft.ButtonStyle(
                                                 shape=ft.RoundedRectangleBorder(radius=0),
                                                 padding=ft.padding.all(5),
@@ -246,7 +280,7 @@ class OrdersScreen(ft.View):
                                             on_click=lambda _: self.delete_row(i[0]),
                                         ),
                                         ft.ElevatedButton(
-                                            "number",
+                                            self.lng["table"]["number_bottun"],
                                             style=ft.ButtonStyle(
                                                 shape=ft.RoundedRectangleBorder(radius=0),
                                                 padding=ft.padding.all(5),
@@ -295,7 +329,7 @@ class OrdersScreen(ft.View):
         left_container = ft.Container(
             content=ft.Column(
                 controls=[
-                    ft.Text("price", size=font_size["subtitle"], color=theme["text_color"]),
+                    ft.Text(self.lng["left_container"]["price"], size=font_size["subtitle"], color=theme["text_color"]),
                     self.price,
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
@@ -311,10 +345,10 @@ class OrdersScreen(ft.View):
         top_container = ft.Container(
             content=ft.Row(
                 controls=[
-                    self.make_button("Product", lambda e: self.page.go("/product_screen"), 150, 50),
-                    self.make_button("orders", lambda e: self.page.go("/orders_screen"), 150, 50),
-                    self.make_button("costumers", lambda e: self.page.go("/customers_screen"), 150, 50),
-                    self.make_button("dashboard", lambda e: self.page.go("/"), 150, 50),
+                    self.make_button(self.lng["top_container"]["Product"], lambda e: self.page.go("/product_screen"), 150, 70),
+                    self.make_button(self.lng["top_container"]["Orders"], lambda e: self.page.go("/orders_screen"), 150, 70),
+                    self.make_button(self.lng["top_container"]["Customers"], lambda e: self.page.go("/customers_screen"), 150, 70),
+                    self.make_button(self.lng["top_container"]["Dashboard"], lambda e: self.page.go("/"), 150, 70),
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
             ),
@@ -325,7 +359,15 @@ class OrdersScreen(ft.View):
         )
 
         main_content_container = ft.Container(
-            content=self.list_view,
+            content=ft.Stack(
+                [
+                    ft.Container(
+                        content=ft.Icon(name=ft.Icons.SHOPPING_CART, size=600, opacity=0.4,color="grey"),
+                        alignment=ft.alignment.center,
+                    ),
+                    self.list_view,
+                ]
+            ),
             padding=20,
             bgcolor=theme["container_bg_colors"],
             border_radius=ft.border_radius.all(theme["container_border_radius"]),
