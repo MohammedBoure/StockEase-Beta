@@ -1,9 +1,9 @@
 import flet as ft
-from ui.dashboard import  dashboard
-from ui.product_screen import ProductScreenView
-from ui.orders_screen import OrdersScreen
-from ui.settings_screen import SettingsScreenView
-from utils.file_utils import settings
+from ui.dashboard.dashboard import  dashboard
+from ui.product.product_screen import ProductScreenView
+from ui.orders.orders_screen import OrdersScreen
+from ui.settings.settings_screen import SettingsScreenView
+from utils.shared import settings
 
 theme = settings["theme"]
 

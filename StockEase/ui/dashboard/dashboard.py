@@ -1,5 +1,6 @@
 import flet as ft
-from utils.file_utils import theme, font_size, language
+from utils.shared import theme, font_size, language
+from .functions import create_button
 
 def dashboard(page: ft.Page):
     lng = language["dashboard"]
@@ -9,31 +10,11 @@ def dashboard(page: ft.Page):
         page.window.skip_task_bar = True
         page.window.destroy()
 
-    def create_button(text, route):
-        return ft.ElevatedButton(
-            text,
-            width=250,
-            height=200,
-            on_click=lambda e: navigate_to_page(route),
-            bgcolor=theme["button_bg_color"],
-            color=theme["button_text_color"],
-            style=ft.ButtonStyle(
-                shape=ft.RoundedRectangleBorder(radius=theme["button_border_radius"]),
-                side=ft.BorderSide(width=theme["button_border_width"], color=theme["button_text_color"]),
-                text_style=ft.TextStyle(size=font_size["subtitle"]),
-                overlay_color=theme["button_overlay_color"]
-            )
-        )
-
-    def navigate_to_page(route):
-        print(f"تم النقر على {route}")
-        page.go(route)
-
     buttons = [
-        create_button(lng["buttons"]["Product"], "/product_screen"),
-        create_button(lng["buttons"]["Orders"], "/orders_screen"),
-        create_button(lng["buttons"]["Customers"], "/customers_screen"),
-        create_button(lng["buttons"]["Statistics"], "/statistics_screen"),
+        create_button(lng["buttons"]["Product"], "/product_screen",page),
+        create_button(lng["buttons"]["Orders"], "/orders_screen",page),
+        create_button(lng["buttons"]["Customers"], "/customers_screen",page),
+        create_button(lng["buttons"]["Statistics"], "/statistics_screen",page),
     ]
 
     interface_buttons = ft.ResponsiveRow(

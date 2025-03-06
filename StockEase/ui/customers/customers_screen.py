@@ -1,10 +1,8 @@
 import flet as ft
-from utils.file_utils import theme,font_size
+from utils.shared import theme, font_size, language 
 
 def product_screen(page):
 
-
-    
     return ft.View(
         route="/customers_screen",
         controls=[  
