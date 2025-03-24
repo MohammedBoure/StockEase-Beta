@@ -1,0 +1,367 @@
+{
+    "en": {
+        "dashboard": {
+            "head": {
+                "Dashboard": "📊 Dashboard"
+            },
+            "buttons": {
+                "Product": "📦 Product",
+                "Orders": "📑 Orders",
+                "Customers": "👨🏼‍🤝‍👨🏼 Customers",
+                "Statistics": "📈 Statistics",
+                "Settings": "Settings",
+                "exit": "exit"
+            }
+        },
+        "orders": {
+            "search": "Search",
+            "table": {
+                "Name": "Name",
+                "Price": "Price",
+                "quantity": "quantity",
+                "Number": "Number",
+                "Status": "          Status",
+                "delete_bottun": "delete",
+                "number_bottun": "Number"
+            },
+            "left_container": {
+                "price": "Price"
+            },
+            "top_container": {
+                "Product": "📦 Product",
+                "Orders": "📑 Orders",
+                "Customers": "👨🏼‍🤝‍👨🏼 Customers",
+                "Dashboard": "📊 Dashboard",
+                "search_in_stock":{
+                    "id":"id",
+                    "name":"name",
+                    "recommanded":"recommanded",
+                    "Current_quantity":"Current quantity",
+                    "price":"price",
+                    "price_per_item":"price per item",
+                    "search":"search",
+                    "label":"id or procudt",
+                    "hint_text":"search in stock"
+                
+                }
+            }
+        },
+        "product": {
+            "table": {
+                "Name": "Name",
+                "recommended_quantity": "Recommended\n     Quantity",
+                "Quantity": "Quantity",
+                "Price": "Price",
+                "Price_Per_Item": "Price Per\n  Item"
+            },
+            "left_container": {
+                "show_special_button": "show",
+                "search_label": "🔍 Search",
+                "Add_Product": {
+                    "Add_Product": "Add Product",
+                    "Name": "Name",
+                    "Recommended_quantity": "Recommended quantity",
+                    "Current_quantity": "Current quantity",
+                    "price": "price",
+                    "Purchase_price": "Purchase price",
+                    "inserting_data": "inserting data",
+                    "exit": "exit"
+                },
+                "Edit_Product": {
+                    "Edit_Product": "Edit Product",
+                    "Name": "Name",
+                    "Recommended_quantity": "Recommended quantity",
+                    "Current_quantity": "Current quantity",
+                    "price": "price",
+                    "Purchase_price": "Purchase price",
+                    "updating_data": "updating data",
+                    "exit": "exit",
+                    "invailed_text": "invalid input!"
+                },
+                "Delete_Product": {
+                    "Delete_Product": "Delete Product",
+                    "Confirm": "Confirm",
+                    "comment": "Are you sure you want to delete?",
+                    "Yes": "Yes",
+                    "No": "NO"
+                },
+                "Search": "Search",
+                "Out_of_stock_products": "Out of stock products"
+            },
+            "top_container": {
+                "Product": "📦 Product",
+                "Orders": "📑 Orders",
+                "Customers": "👨🏼‍🤝‍👨🏼 Customers",
+                "Dashboard": "📊 Dashboard"
+            }
+        },
+        "settings": {
+            "generals_settings": {
+                "title": "Generals settings",
+                "language": "language",
+                "theme": "theme",
+                "dark": "dark",
+                "light": "light"
+            },
+            "printing_settings": {
+                "title": "Print settings",
+                "Font_size": "Font size",
+                "Paper_type": "Paper type"
+            },
+            "database_settings": {
+                "title": "Database settings",
+                "User_name": "User name",
+                "Password": "Password"
+            },
+            "backup_settings": {
+                "title": "Backup settings",
+                "save_path": "save path",
+                "create_a_version_now": "create_a_version_now"
+            }
+        }
+    },
+    "fr": {
+        "dashboard": {
+            "head": {
+                "Dashboard": "📊 Tableau de bord"
+            },
+            "buttons": {
+                "Product": "📦 Produit",
+                "Orders": "📑 Commandes",
+                "Customers": "👨🏼‍🤝‍👨🏼 Clients",
+                "Statistics": "📈 Statistiques",
+                "Settings": "Paramètres",
+                "exit": "Quitter"
+            }
+        },
+        "orders": {
+            "search": "Rechercher",
+            "table": {
+                "Name": "Nom",
+                "Price": "Prix",
+                "quantity": "Qty",
+                "Number": "Nombre",
+                "Status": "          Statut",
+                "delete_bottun": "supprimer",
+                "number_bottun": "Nombre"
+            },
+            "left_container": {
+                "price": "Prix"
+            },
+            "top_container": {
+                "Product": "📦 Produit",
+                "Orders": "📑 Commandes",
+                "Customers": "👨🏼‍🤝‍👨🏼 Clients",
+                "Dashboard": "📊 Tableau de bord",
+                "search_in_stock": {
+                    "id": "ID",
+                    "name": "Nom",
+                    "recommanded": "Recommandé",
+                    "Current_quantity": "",
+                    "price": "Prix",
+                    "price_per_item": "Prix d'achat",
+    
+                    "search": "Recherche",
+                    "label": "Produit ou ID",
+                    "hint_text": "Rechercher dans le stock"
+                }
+
+            }
+        },
+        "product": {
+            "table": {
+                "Name": "Nom",
+                "recommended_quantity": "Quantité\n recommandée",
+                "Quantity": "Quantité",
+                "Price": "Prix",
+                "Price_Per_Item": "Prix par\n article"
+            },
+            "left_container": {
+                "show_special_button": "afficher",
+                "search_label": "🔍 Rechercher",
+                "Add_Product": {
+                    "Add_Product": "Ajouter un produit",
+                    "Name": "Nom",
+                    "Recommended_quantity": "Quantité recommandée",
+                    "Current_quantity": "Quantité actuelle",
+                    "price": "prix",
+                    "Purchase_price": "Prix d'achat",
+                    "inserting_data": "insertion de données",
+                    "exit": "quitter"
+                },
+                "Edit_Product": {
+                    "Edit_Product": "Modifier le produit",
+                    "Name": "Nom",
+                    "Recommended_quantity": "Quantité recommandée",
+                    "Current_quantity": "Quantité actuelle",
+                    "price": "prix",
+                    "Purchase_price": "Prix d'achat",
+                    "updating_data": "mise à jour des données",
+                    "exit": "quitter",
+                    "invailed_text": "entrée non valide!"
+                },
+                "Delete_Product": {
+                    "Delete_Product": "Supprimer le produit",
+                    "Confirm": "Confirmer",
+                    "comment": "Êtes-vous sûr de vouloir supprimer ?",
+                    "Yes": "Oui",
+                    "No": "Non"
+                },
+                "Search": "Rechercher",
+                "Out_of_stock_products": "Produits en rupture de stock"
+            },
+            "top_container": {
+                "Product": "📦 Produit",
+                "Orders": "📑 Commandes",
+                "Customers": "👨🏼‍🤝‍👨🏼 Clients",
+                "Dashboard": "📊 Tableau de bord"
+            }
+        },
+        "settings": {
+            "generals_settings": {
+                "title": "Paramètres généraux",
+                "language": "Langue",
+                "theme": "Thème",
+                "dark": "Sombre",
+                "light": "Clair"
+            },
+            "printing_settings": {
+                "title": "Paramètres d'impression",
+                "Font_size": "Taille de la police",
+                "Paper_type": "Type de papier"
+            },
+            "database_settings": {
+                "title": "Paramètres de la base de données",
+                "User_name": "Nom d'utilisateur",
+                "Password": "Mot de passe"
+            },
+            "backup_settings": {
+                "title": "Paramètres de sauvegarde",
+                "save_path": "Chemin de sauvegarde",
+                "create_a_version_now": "Créer une version maintenant"
+            }
+        }
+    },
+    "ar": {
+        "dashboard": {
+            "head": {
+                "Dashboard": "📊 لوحة التحكم"
+            },
+            "buttons": {
+                "Product": "📦 المنتج",
+                "Orders": "📑 الطلبات",
+                "Customers": "👨🏼‍🤝‍👨🏼 العملاء",
+                "Statistics": "📈 الإحصائيات",
+                "Settings": "الإعدادات",
+                "exit": "خروج"
+            }
+        },
+        "orders": {
+            "search": "البحث",
+            "table": {
+                "Name": "الاسم",
+                "Price": "السعر",
+                "quantity": "الكمية المتوفرة",
+                "Number": "العدد",
+                "Status": "          الحالة",
+                "delete_bottun": "حذف",
+                "number_bottun": "العدد"
+            },
+            "left_container": {
+                "price": "السعر"
+            },
+            "top_container": {
+                "Product": "📦 المنتج",
+                "Orders": "📑 الطلبات",
+                "Customers": "👨🏼‍🤝‍👨🏼 العملاء",
+                "Dashboard": "📊 لوحة التحكم",
+                "search_in_stock":{
+                    "id":"رقم التعريف",
+                    "name":"الاسم",
+                    "recommanded":"الموصى به",
+                    "Current_quantity":"",
+                    "price":"السعر",
+                    "price_per_item":"سعر الشراء",
+                    
+                    "search":"البحث",
+                    "label":"المنتج او رقم التعريف",
+                    "hint_text":"البحث في المخزون"
+                
+            }
+            }
+        },
+        "product": {
+            "table": {
+                "Name": "الاسم",
+                "recommended_quantity": "الكمية\nالموصى بها",
+                "Quantity": "الكمية",
+                "Price": "السعر",
+                "Price_Per_Item": "السعر لكل\nعنصر"
+            },
+            "left_container": {
+                "show_special_button": "إظهار",
+                "search_label": "🔍 بحث",
+                "Add_Product": {
+                    "Add_Product": "إضافة منتج",
+                    "Name": "الاسم",
+                    "Recommended_quantity": "الكمية الموصى بها",
+                    "Current_quantity": "الكمية الحالية",
+                    "price": "السعر",
+                    "Purchase_price": "سعر الشراء",
+                    "inserting_data": "إدخال البيانات",
+                    "exit": "خروج"
+                },
+                "Edit_Product": {
+                    "Edit_Product": "تعديل المنتج",
+                    "Name": "الاسم",
+                    "Recommended_quantity": "الكمية الموصى بها",
+                    "Current_quantity": "الكمية الحالية",
+                    "price": "السعر",
+                    "Purchase_price": "سعر الشراء",
+                    "updating_data": "تحديث البيانات",
+                    "exit": "خروج",
+                    "invailed_text": "مدخلات خاطئة!"
+                },
+                "Delete_Product": {
+                    "Delete_Product": "حذف المنتج",
+                    "Confirm": "تأكيد",
+                    "comment": "هل أنت متأكد أنك تريد الحذف؟",
+                    "Yes": "نعم",
+                    "No": "لا"
+                },
+                "Search": "البحث",
+                "Out_of_stock_products": "المنتجات المنخفضة في المخزون"
+            },
+            "top_container": {
+                "Product": "📦 المنتج",
+                "Orders": "📑 الطلبات",
+                "Customers": "👨🏼‍🤝‍👨🏼 العملاء",
+                "Dashboard": "📊 لوحة التحكم"
+            }
+        },
+        "settings": {
+            "generals_settings": {
+                "title": "الإعدادات العامة",
+                "language": "اللغة",
+                "theme": "السمة",
+                "dark": "داكن",
+                "light": "فاتح"
+            },
+            "printing_settings": {
+                "title": "إعدادات الطباعة",
+                "Font_size": "حجم الخط",
+                "Paper_type": "نوع الورق"
+            },
+            "database_settings": {
+                "title": "إعدادات قاعدة البيانات",
+                "User_name": "اسم المستخدم",
+                "Password": "كلمة المرور"
+            },
+            "backup_settings": {
+                "title": "إعدادات النسخ الاحتياطي",
+                "save_path": "مسار الحفظ",
+                "create_a_version_now": "إنشاء نسخة الآن"
+            }
+        }
+    }
+}

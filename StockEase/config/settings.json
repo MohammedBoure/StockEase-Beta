@@ -1,0 +1,11 @@
+{
+    "theme": "dark",
+    "language": "ar",
+    "font_size": 12,
+    "paper_type": "A4",
+    "db_username": "",
+    "db_password": "",
+    "backup_path": "",
+    "network_ip": "",
+    "notifications_enabled": true
+}

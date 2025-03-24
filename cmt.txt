@@ -1,0 +1,27 @@
+Added multi-language support, UI improvements, and new features  
+
+- Multi-language support:  
+  - Added a JSON file to store multiple languages, allowing easy addition of new ones.  
+  - Implemented a settings page to change the language with instant updates.  
+
+- UI improvements:  
+  - Added icons to buttons in the product interface (left side).  
+  - Improved the overall UI design.  
+  - Added a filter button to show only low-stock products.  
+
+- Orders system enhancements:  
+  - Added two new tables in the database: `orders` and `orders_details`.  
+  - Enabled quick selling using keyboard input (two digits within 0.5s).  
+  - Allowed setting the quantity by pressing a number after adding an item.  
+  - Pressing `ENTER` now saves the order to the database.  
+  - If the requested quantity exceeds stock, the available amount is shown.  
+
+- New settings features:  
+  - Added a toggle to switch between dark and light (black & white) themes.  
+  - Language and theme settings are saved and applied instantly.  
+
+- New buttons:  
+  - Added an Exit button next to the settings icon at the bottom.  
+  - Added a Statistics button on the main screen.  
+
+- Bug fixes and optimizations  
