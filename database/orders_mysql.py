@@ -11,7 +11,7 @@ class OrderDatabase:
         self.cursor = self.conn.cursor()
         self.create_database(database)
         
-        self.conn.database = database  # إعادة الاتصال بقاعدة البيانات المحددة
+        self.conn.database = database 
         self.create_tables()
 
     def create_database(self, database):
